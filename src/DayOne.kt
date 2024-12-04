@@ -48,7 +48,7 @@ fun measureSimilarity(a: Array<Int>, b: Array<Int>): Int {
     //     similarity += i * (occurrencesPerNumber[i] ?: 0) for i in a
     // }
     // return distance
-    return a.sumOf { num -> num * (occurrencesPerNumber[num] ?: 0)}
+    return a.sumOf { num -> num * (occurrencesPerNumber[num] ?: 0) }
 }
 
 fun measureSimilaritySolution(a: Array<Int>, b: Array<Int>): Int {
