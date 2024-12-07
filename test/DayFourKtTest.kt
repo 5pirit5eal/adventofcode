@@ -3,53 +3,90 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 
-fun xmasDetection(matrix: Array<CharArray>): Int {
-    // Check all directions for XMAS and SAMX
-    var result = 0
-    val pattern = "(XMAS|SAMX)".toRegex()
-    for (i in matrix.indices) {
-        result += pattern.findAll(matrix[i].joinToString("")).count()
-
-        result += pattern.findAll(getDiagonal(matrix = matrix, startColumn = 0, startRow = i)).count()
-        result += pattern.findAll(getReverseDiagonal(matrix = matrix, startColumn = matrix[0].size - 1, startRow = i))
-            .forEachIndexed({index, matchResult -> matchResult.groupValues .forEach[]})
-    }
-    for (j in matrix[0].indices) {
-        result += pattern.findAll(matrix.map { it[j] }.joinToString("")).count()
-        result += pattern.findAll(getDiagonal(matrix = matrix, startColumn = j, startRow = 0)).count()
-        result += pattern.findAll(getReverseDiagonal(matrix = matrix, startColumn = j, startRow = matrix.size - 1))
-            .count()
-    }
-    return result
-}
-
-class `DayFourKtTest.kt` {
+class DayFourKtTest {
     companion object {
         @JvmStatic
         fun provideTestCases(): List<Any> {
-            val filePath = "test/fourthtest.txt"
-            val lines = File(filePath).readLines()
-            val matrix = Array(lines.size) { CharArray(lines[0].length) }
+            var filePath = "test/fourthtest.txt"
+            var lines = File(filePath).readLines()
+            val matrixLarge = Array(lines.size) { CharArray(lines[0].length) }
 
             for (i in lines.indices) {
                 for (j in lines[i].indices) {
-                    matrix[i][j] = lines[i][j]
+                    matrixLarge[i][j] = lines[i][j]
                 }
             }
+            filePath = "test/fourthtestSmaller.txt"
+            lines = File(filePath).readLines()
+            val matrixSmall = Array(lines.size) { CharArray(lines[0].length) }
 
-            return listOf(arrayOf(matrix, "."))
+            for (i in lines.indices) {
+                for (j in lines[i].indices) {
+                    matrixSmall[i][j] = lines[i][j]
+                }
+            }
+            val fileString = "XMASAMX"
+            val matrixSmaller = Array(1) { CharArray(fileString.length) }
+
+            for (j in fileString.indices) {
+                matrixSmaller[0][j] = fileString[j]
+            }
+
+
+            return listOf(arrayOf(matrixSmall, 4), arrayOf(matrixLarge, 18), arrayOf(matrixSmaller, 2))
         }
     }
 
     @ParameterizedTest
     @MethodSource("provideTestCases")
-    fun testXMASDetection(input: Array<CharArray>, expected: String) {
-        val matrix = xmasDetection()
-        for (i in matrix.indices) {
-            for (j in matrix[i].indices) {
-                assertEquals(matrix[i][j], expected)
+    fun testCountXMAS(input: Array<CharArray>, expected: Int) {
+        val result = countXMAS(input)
+        assertEquals(expected, result)
+    }
+}
+
+class DayFourKtTest2 {
+    companion object {
+        @JvmStatic
+        fun provideTestCases(): List<Any> {
+            var filePath = "test/fourthtest.txt"
+            var lines = File(filePath).readLines()
+            val matrixLarge = Array(lines.size) { CharArray(lines[0].length) }
+
+            for (i in lines.indices) {
+                for (j in lines[i].indices) {
+                    matrixLarge[i][j] = lines[i][j]
+                }
             }
+            filePath = "test/fourthtestSmaller.txt"
+            lines = File(filePath).readLines()
+            val matrixSmall = Array(lines.size) { CharArray(lines[0].length) }
+
+            for (i in lines.indices) {
+                for (j in lines[i].indices) {
+                    matrixSmall[i][j] = lines[i][j]
+                }
+            }
+            val fileString = "M.S\n" +
+                    ".A.\n" +
+                    "M.S"
+            val matrixSmaller = Array(3) { CharArray(3) }
+            for ((i, split) in fileString.split("\n").withIndex()) {
+                for (j in split.indices) {
+                    matrixSmaller[i][j] = split[j]
+                }
+            }
+
+
+
+            return listOf(arrayOf(matrixSmall, 0), arrayOf(matrixLarge, 9), arrayOf(matrixSmaller, 1))
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestCases")
+    fun testCountMAS(input: Array<CharArray>, expected: Int) {
+        val result = countMAS(input)
         assertEquals(expected, result)
     }
 }
