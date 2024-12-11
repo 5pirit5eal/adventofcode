@@ -23,6 +23,7 @@ fun advent() {
         3 -> println(thirdDay())
         4 -> println(fourthDay())
         5 -> println(fifthDay())
-        8 -> println(sixthDay())
+        6 -> println(sixthDay())
+        12 -> println(seventhDay())
     }
 }
