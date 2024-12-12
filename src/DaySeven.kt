@@ -9,6 +9,7 @@ fun seventhDay(): Pair<Long, Long> {
     val filePath = "inputs/seventh_day_input.txt"
     // read txt file and construct 2D matrix
     val lines = File(filePath).readLines()
+
     return getBinaryOperations(lines) to getTriOperations(lines)
 }
 
@@ -152,7 +153,7 @@ private fun getTriOperations(equations: List<String>): Long {
         val (rawEquationResult, rawOperands) = equation.split(":")
         val equationResult = rawEquationResult.toLong()
         val operands = rawOperands.split(" ").drop(1).map { it -> it.toLong() }
-        val tree = TriTree(operands)
+        val tree = BinaryTree(operands)
         val searchResult = tree.findResult(equationResult)
         logger.info { "Found $searchResult, expected $equationResult" }
         result += searchResult
