@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func eleven() {
+func Eleven() {
 	f, err := os.Open("inputs/eleventh_day_input.txt")
 	if err != nil {
 		log.Fatal(err)
