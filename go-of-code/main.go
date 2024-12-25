@@ -6,7 +6,9 @@ import (
 	"os"
 	"time"
 
+	eleven "advent-of-code/go-of-code/eleven"
 	ten "advent-of-code/go-of-code/ten"
+	"advent-of-code/go-of-code/twelve"
 )
 
 func setupLogger(day int) *log.Logger {
@@ -20,7 +22,7 @@ func setupLogger(day int) *log.Logger {
 func main() {
 	logger := setupLogger(1)
 	// day, err := strconv.Atoi(os.Args[1])
-	day := 10
+	day := 11
 	var err error = nil
 	if err != nil {
 		log.Fatalf("Could not parse day %q as int", os.Args[1])
@@ -49,6 +51,10 @@ func main() {
 	// 	nine()
 	case 10:
 		fmt.Println(ten.Ten())
+	case 11:
+		fmt.Println(eleven.Eleven())
+	case 12:
+		fmt.Println(twelve.Twelve())
 	default:
 		logger.Fatalf("Not implemented yet.")
 	}
