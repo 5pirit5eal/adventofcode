@@ -22,7 +22,7 @@ func setupLogger(day int) *log.Logger {
 func main() {
 	logger := setupLogger(1)
 	// day, err := strconv.Atoi(os.Args[1])
-	day := 11
+	day := 12
 	var err error = nil
 	if err != nil {
 		log.Fatalf("Could not parse day %q as int", os.Args[1])
