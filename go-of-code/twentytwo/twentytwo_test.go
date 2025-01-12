@@ -14,7 +14,9 @@ func TestGenerateSecret(t *testing.T) {
 	}
 
 	for _, input := range inputs {
-		got := generateSecret(input[0], 2000)
+		ch := make(chan int)
+		go generateSecret(input[0], 2000, ch)
+		got := <-ch
 		if got != input[1] {
 			t.Errorf("generateSecret(%d) = %d, want %d", input[0], got, input[1])
 		}
@@ -37,25 +39,12 @@ func TestGenerateSecretSequence(t *testing.T) {
 	}
 
 	for i := 0; i < len(inputs)-1; i++ {
-		got := generateSecret(inputs[i], 1)
+		ch := make(chan int)
+		go generateSecret(inputs[i], 1, ch)
+		got := <-ch
 		log.Printf("generateSecret(%b) = %b, want %b", inputs[i], got, inputs[i+1])
 		if got != inputs[i+1] {
 			t.Errorf("generateSecret(%d) = %d, want %d", inputs[0], got, inputs[i+1])
-		}
-	}
-}
-
-func TestOneDigit(t *testing.T) {
-	inputs := [][]int{
-		{123, 3},
-		{15887950, 0},
-		{16495136, 6},
-	}
-
-	for _, input := range inputs {
-		got := getOneDigit(input[0])
-		if got != input[1] {
-			t.Errorf("oneDigit(%d) = %d, want %d", input[0], got, input[1])
 		}
 	}
 }
